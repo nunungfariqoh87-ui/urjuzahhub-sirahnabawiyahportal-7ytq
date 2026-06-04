@@ -12,50 +12,117 @@
         .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen">
-    <!-- Hero Section -->
-    <header class="py-16 px-6 text-center relative overflow-hidden border-b border-white/5">
-        <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent pointer-events-none"></div>
-        <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Urjuzah Hub</h1>
-        <p class="text-slate-400 mt-3 max-w-xl mx-auto text-sm md:text-base">Panduan interaktif mempelajari daftar perang dan sejarah Sirah Nabawiyah dalam kitab bait syair Urjuzah al-Mi'iyah.</p>
-    </header>
+<body class="text-slate-100 min-h-screen flex flex-col justify-between">
+    <div>
+        <!-- Hero Section -->
+        <header class="py-12 px-6 text-center relative overflow-hidden border-b border-white/5">
+            <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent pointer-events-none"></div>
+            <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Urjuzah Hub</h1>
+            <p class="text-slate-400 mt-2 max-w-xl mx-auto text-sm">Klik pada kartu perang untuk membaca penjelasan sejarah lengkap dan detail peristiwanya!</p>
+        </header>
 
-    <main class="max-w-5xl mx-auto px-6 py-12">
-        <!-- Search Bar -->
-        <div class="mb-10 max-w-md mx-auto">
-            <div class="relative">
-                <input type="text" id="search-input" oninput="filterBattles()" placeholder="Cari nama perang..." class="w-full bg-slate-900 border border-white/10 px-6 py-3.5 rounded-2xl outline-none focus:border-emerald-500 transition-all text-sm">
-                <i data-lucide="search" class="absolute right-4 top-3.5 text-slate-400 w-5 h-5"></i>
+        <main class="max-w-5xl mx-auto px-6 py-8">
+            <!-- Search Bar -->
+            <div class="mb-8 max-w-md mx-auto">
+                <div class="relative">
+                    <input type="text" id="search-input" oninput="filterBattles()" placeholder="Cari nama perang..." class="w-full bg-slate-900 border border-white/10 px-6 py-3.5 rounded-2xl outline-none focus:border-emerald-500 transition-all text-sm">
+                    <i data-lucide="search" class="absolute right-4 top-3.5 text-slate-400 w-5 h-5"></i>
+                </div>
+            </div>
+
+            <!-- Battles Grid -->
+            <div id="battles-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamic Content -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass max-w-lg w-full p-8 rounded-3xl relative animate-in fade-in zoom-in-95 duration-200">
+            <button onclick="closeModal()" class="absolute right-6 top-6 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <span id="modal-year" class="bg-emerald-500/10 text-emerald-300 text-xs px-3 py-1 rounded-full font-semibold"></span>
+            <h2 id="modal-title" class="text-2xl font-extrabold text-emerald-400 mt-4 mb-3"></h2>
+            <p id="modal-desc" class="text-slate-300 text-sm leading-relaxed mb-6"></p>
+            <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                <h4 class="text-xs font-bold text-slate-400 uppercase mb-1">Pelajaran Penting</h4>
+                <p id="modal-lesson" class="text-slate-300 text-xs leading-relaxed"></p>
             </div>
         </div>
-
-        <!-- Battles Grid -->
-        <div id="battles-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Dynamic Content -->
-        </div>
-    </main>
+    </div>
 
     <script>
         const battles = [
-            { id: 1, name: "Perang Waddan (Abwa')", year: "2 Hijriah", desc: "Perang pertama yang diikuti langsung oleh Rasulullah SAW untuk membuat perjanjian damai." },
-            { id: 2, name: "Perang Badar Al-Kubra", year: "2 Hijriah", desc: "Kemenangan pembeda (Yaumul Furqan) antara kebenaran dan kebatilan." },
-            { id: 3, name: "Perang Uhud", year: "3 Hijriah", desc: "Pertempuran berat di bukit Uhud yang menguji kepatuhan para sahabat." },
-            { id: 4, name: "Perang Khandaq (Ahzab)", year: "5 Hijriah", desc: "Strategi penggalian parit pertahanan mengelilingi kota Madinah." },
-            { id: 5, name: "Perang Khaibar", year: "7 Hijriah", desc: "Penaklukan benteng pertahanan Yahudi terkuat di utara Madinah." },
-            { id: 6, name: "Perang Mu'tah", year: "8 Hijriah", desc: "Pertempuran sengit melawan pasukan Romawi Timur di perbatasan Syam." },
-            { id: 7, name: "Fathu Makkah", year: "8 Hijriah", desc: "Pembebasan kota suci Makkah secara damai tanpa pertumpahan darah." },
-            { id: 8, name: "Perang Tabuk", year: "9 Hijriah", desc: "Ekspedisi militer terakhir Nabi SAW menghadapi pasukan Romawi." }
+            { 
+                id: 1, 
+                name: "Perang Waddan (Abwa')", 
+                year: "2 Hijriah", 
+                desc: "Perang Waddan (atau Abwa') adalah pertempuran pertama yang dipimpin langsung oleh Rasulullah SAW setelah hijrah ke Madinah. Tujuan utamanya adalah untuk membuat perjanjian damai dengan kabilah Bani Dhamrah serta mengamankan rute perdagangan di sekitar wilayah Madinah.", 
+                lesson: "Pentingnya diplomasi, menjaga keamanan wilayah pertahanan, dan membangun aliansi damai sejak dini." 
+            },
+            { 
+                id: 2, 
+                name: "Perang Badar Al-Kubra", 
+                year: "2 Hijriah", 
+                desc: "Pertempuran besar pertama yang menentukan masa depan Islam. Pasukan muslim yang berjumlah hanya 313 orang berhasil mengalahkan pasukan kafir Quraisy yang berjumlah lebih dari 1000 orang dengan bantuan para malaikat yang dikirim oleh Allah SWT.", 
+                lesson: "Kemenangan mutlak hanya datang dari pertolongan Allah SWT, bukan semata-mata karena jumlah pasukan atau senjata." 
+            },
+            { 
+                id: 3, 
+                name: "Perang Uhud", 
+                year: "3 Hijriah", 
+                desc: "Ujian berat bagi kaum muslimin di bukit Uhud. Akibat sebagian pasukan pemanah mengabaikan perintah Rasulullah SAW karena tergoda harta rampasan perang (ghanimah), pasukan Khalid bin Walid (saat itu belum masuk Islam) berhasil memutarbalikkan keadaan.", 
+                lesson: "Ketaatan mutlak kepada pemimpin dan fokus pada tujuan perjuangan, bukan pada urusan duniawi." 
+            },
+            { 
+                id: 4, 
+                name: "Perang Khandaq (Ahzab)", 
+                year: "5 Hijriah", 
+                desc: "Pengepungan kota Madinah oleh pasukan sekutu (Ahzab) yang terdiri dari kafir Quraisy, kabilah Arab, dan kaum Yahudi. Kaum muslimin bertahan dengan menggali parit raksasa berkat usulan brilian dari sahabat Salman Al-Farisi.", 
+                lesson: "Keterbukaan terhadap ide kreatif, kerja sama tim yang solid, dan kesabaran dalam menghadapi kepungan musuh." 
+            },
+            { 
+                id: 5, 
+                name: "Perang Khaibar", 
+                year: "7 Hijriah", 
+                desc: "Penaklukan benteng pertahanan kaum Yahudi Khaibar yang sangat kuat dan strategis. Perang ini mengakhiri ancaman konspirasi militer dari kaum Yahudi yang sering memprovokasi kabilah Arab untuk menyerang Madinah.", 
+                lesson: "Pentingnya menuntaskan akar masalah keamanan dan ketegasan dalam menghadapi pengkhianatan." 
+            },
+            { 
+                id: 6, 
+                name: "Perang Mu'tah", 
+                year: "8 Hijriah", 
+                desc: "Pertempuran sengit melawan pasukan Romawi Timur di Syam. Tiga panglima perang muslim gugur syahid berturut-turut hingga bendera komando diambil alih oleh Khalid bin Walid yang berhasil menyelamatkan pasukan dengan taktik militer yang jenius.", 
+                lesson: "Kepemimpinan yang adaptif di saat krisis dan keberanian menghadapi kekuatan yang jauh lebih besar." 
+            },
+            { 
+                id: 7, 
+                name: "Fathu Makkah", 
+                year: "8 Hijriah", 
+                desc: "Pembebasan kota suci Makkah dari kekuasaan kaum musyrik. Rasulullah SAW memasuki kota Makkah dengan penuh ketundukan tanpa ada pertumpahan darah besar, kemudian menghancurkan berhala di sekitar Ka'bah dan memaafkan penduduk Makkah.", 
+                lesson: "Sifat pemaaf yang luar biasa, kerendahan hati saat meraih kemenangan besar, dan dakwah yang damai." 
+            },
+            { 
+                id: 8, 
+                name: "Perang Tabuk", 
+                year: "9 Hijriah", 
+                desc: "Ekspedisi militer terakhir yang dipimpin langsung oleh Rasulullah SAW menuju perbatasan Romawi. Meskipun menempuh perjalanan sangat panas dan jauh, perang ini berakhir tanpa kontak fisik karena pasukan Romawi mundur ketakutan melihat persatuan umat Islam.", 
+                lesson: "Kekuatan mental dan reputasi (wibawa) yang kuat mampu menggentarkan musuh sebelum pertempuran dimulai." 
+            }
         ];
 
         function renderBattles(list = battles) {
             const container = document.getElementById('battles-container');
             container.innerHTML = list.map(b => `
-                <div class="glass p-6 rounded-3xl hover:border-emerald-500/30 transition-all">
+                <div class="glass p-6 rounded-3xl hover:border-emerald-500/30 transition-all cursor-pointer group" onclick="openModal(${b.id})">
                     <div class="flex justify-between items-start mb-3">
-                        <h3 class="text-lg font-bold text-emerald-400">${b.name}</h3>
+                        <h3 class="text-lg font-bold text-emerald-400 group-hover:text-emerald-300 transition-colors">${b.name}</h3>
                         <span class="bg-emerald-500/10 text-emerald-300 text-xs px-3 py-1 rounded-full font-semibold">${b.year}</span>
                     </div>
-                    <p class="text-slate-400 text-sm leading-relaxed">${b.desc}</p>
+                    <p class="text-slate-400 text-sm leading-relaxed line-clamp-2">${b.desc}</p>
+                    <span class="text-emerald-500 text-xs font-bold mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Baca Selengkapnya <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
                 </div>
             `).join('');
             lucide.createIcons();
@@ -65,6 +132,19 @@
             const query = document.getElementById('search-input').value.toLowerCase();
             const filtered = battles.filter(b => b.name.toLowerCase().includes(query));
             renderBattles(filtered);
+        }
+
+        function openModal(id) {
+            const b = battles.find(x => x.id === id);
+            document.getElementById('modal-title').innerText = b.name;
+            document.getElementById('modal-year').innerText = b.year;
+            document.getElementById('modal-desc').innerText = b.desc;
+            document.getElementById('modal-lesson').innerText = b.lesson;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
         }
 
         renderBattles();
