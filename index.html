@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urjuzah Hub - Sirah Nabawiyah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b1329; }
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen">
+    <!-- Hero Section -->
+    <header class="py-16 px-6 text-center relative overflow-hidden border-b border-white/5">
+        <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent pointer-events-none"></div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Urjuzah Hub</h1>
+        <p class="text-slate-400 mt-3 max-w-xl mx-auto text-sm md:text-base">Panduan interaktif mempelajari daftar perang dan sejarah Sirah Nabawiyah dalam kitab bait syair Urjuzah al-Mi'iyah.</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-12">
+        <!-- Search Bar -->
+        <div class="mb-10 max-w-md mx-auto">
+            <div class="relative">
+                <input type="text" id="search-input" oninput="filterBattles()" placeholder="Cari nama perang..." class="w-full bg-slate-900 border border-white/10 px-6 py-3.5 rounded-2xl outline-none focus:border-emerald-500 transition-all text-sm">
+                <i data-lucide="search" class="absolute right-4 top-3.5 text-slate-400 w-5 h-5"></i>
+            </div>
+        </div>
+
+        <!-- Battles Grid -->
+        <div id="battles-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Dynamic Content -->
+        </div>
+    </main>
+
+    <script>
+        const battles = [
+            { id: 1, name: "Perang Waddan (Abwa')", year: "2 Hijriah", desc: "Perang pertama yang diikuti langsung oleh Rasulullah SAW untuk membuat perjanjian damai." },
+            { id: 2, name: "Perang Badar Al-Kubra", year: "2 Hijriah", desc: "Kemenangan pembeda (Yaumul Furqan) antara kebenaran dan kebatilan." },
+            { id: 3, name: "Perang Uhud", year: "3 Hijriah", desc: "Pertempuran berat di bukit Uhud yang menguji kepatuhan para sahabat." },
+            { id: 4, name: "Perang Khandaq (Ahzab)", year: "5 Hijriah", desc: "Strategi penggalian parit pertahanan mengelilingi kota Madinah." },
+            { id: 5, name: "Perang Khaibar", year: "7 Hijriah", desc: "Penaklukan benteng pertahanan Yahudi terkuat di utara Madinah." },
+            { id: 6, name: "Perang Mu'tah", year: "8 Hijriah", desc: "Pertempuran sengit melawan pasukan Romawi Timur di perbatasan Syam." },
+            { id: 7, name: "Fathu Makkah", year: "8 Hijriah", desc: "Pembebasan kota suci Makkah secara damai tanpa pertumpahan darah." },
+            { id: 8, name: "Perang Tabuk", year: "9 Hijriah", desc: "Ekspedisi militer terakhir Nabi SAW menghadapi pasukan Romawi." }
+        ];
+
+        function renderBattles(list = battles) {
+            const container = document.getElementById('battles-container');
+            container.innerHTML = list.map(b => `
+                <div class="glass p-6 rounded-3xl hover:border-emerald-500/30 transition-all">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-bold text-emerald-400">${b.name}</h3>
+                        <span class="bg-emerald-500/10 text-emerald-300 text-xs px-3 py-1 rounded-full font-semibold">${b.year}</span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">${b.desc}</p>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function filterBattles() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = battles.filter(b => b.name.toLowerCase().includes(query));
+            renderBattles(filtered);
+        }
+
+        renderBattles();
+    </script>
+</body>
+</html>
