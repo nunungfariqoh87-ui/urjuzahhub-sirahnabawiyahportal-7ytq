@@ -3,55 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Urjuzah Hub - Sirah Nabawiyah</title>
+    <title>Urjuzah Hub - Sirah Nabawiyah Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b1329; }
-        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0A192F; color: #F8FAFC; }
+        .glass { background: rgba(10, 25, 47, 0.7); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(100, 255, 218, 0.1); }
+        .neon-border { border: 1px solid rgba(100, 255, 218, 0.15); }
+        .neon-border:hover { border-color: #64FFDA; box-shadow: 0 0 15px rgba(100, 255, 218, 0.15); }
+        .text-neon { color: #64FFDA; }
+        .bg-neon { background-color: #64FFDA; }
+        .transition-custom { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen flex flex-col justify-between">
-    <div>
-        <!-- Hero Section -->
-        <header class="py-12 px-6 text-center relative overflow-hidden border-b border-white/5">
-            <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent pointer-events-none"></div>
-            <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Urjuzah Hub</h1>
-            <p class="text-slate-400 mt-2 max-w-xl mx-auto text-sm">Klik pada kartu perang untuk membaca penjelasan sejarah lengkap dan detail peristiwanya!</p>
-        </header>
+<body class="min-h-screen flex flex-col justify-between">
 
-        <main class="max-w-5xl mx-auto px-6 py-8">
-            <!-- Search Bar -->
-            <div class="mb-8 max-w-md mx-auto">
-                <div class="relative">
-                    <input type="text" id="search-input" oninput="filterBattles()" placeholder="Cari nama perang..." class="w-full bg-slate-900 border border-white/10 px-6 py-3.5 rounded-2xl outline-none focus:border-emerald-500 transition-all text-sm">
-                    <i data-lucide="search" class="absolute right-4 top-3.5 text-slate-400 w-5 h-5"></i>
-                </div>
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full glass z-50 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+            <div class="bg-neon/10 p-2 rounded-xl border border-neon/30">
+                <i data-lucide="book-open" class="text-neon w-5 h-5"></i>
             </div>
-
-            <!-- Battles Grid -->
-            <div id="battles-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Dynamic Content -->
-            </div>
-        </main>
-    </div>
-
-    <!-- Detail Modal -->
-    <div id="detail-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass max-w-lg w-full p-8 rounded-3xl relative animate-in fade-in zoom-in-95 duration-200">
-            <button onclick="closeModal()" class="absolute right-6 top-6 text-slate-400 hover:text-white">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <span id="modal-year" class="bg-emerald-500/10 text-emerald-300 text-xs px-3 py-1 rounded-full font-semibold"></span>
-            <h2 id="modal-title" class="text-2xl font-extrabold text-emerald-400 mt-4 mb-3"></h2>
-            <p id="modal-desc" class="text-slate-300 text-sm leading-relaxed mb-6"></p>
-            <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                <h4 class="text-xs font-bold text-slate-400 uppercase mb-1">Pelajaran Penting</h4>
-                <p id="modal-lesson" class="text-slate-300 text-xs leading-relaxed"></p>
-            </div>
+            <span class="text-xl font-extrabold tracking-tighter">Urjuzah<span class="text-neon">Hub</span></span>
         </div>
-    </div>
+        <div class="flex items-center gap-4">
+            <a href="https://discord.gg/opencloud" target="_blank" class="text-xs font-semibold text-slate-300 hover:text-neon transition-custom flex items-center gap-1.5 bg-white/5 px-4 py-2 rounded-full">
+                <i data-lucide="users" class="w-3.5 h-3.5"></i> Komunitas
+            </a>
+        </div>
+    </nav>
+
+    <!-- App Container -->
+    <main id="app-container" class="pt-28 px-6 max-w-6xl mx-auto w-full flex-grow pb-12">
+        <!-- Halaman akan di-render secara dinamis di sini -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-8 text-center text-xs text-slate-500">
+        <p>© 2025 Urjuzah Hub. Didesain secara premium oleh Senior UI/UX Designer.</p>
+    </footer>
 
     <script>
         const battles = [
@@ -60,94 +56,111 @@
                 name: "Perang Waddan (Abwa')", 
                 year: "2 Hijriah", 
                 desc: "Perang Waddan (atau Abwa') adalah pertempuran pertama yang dipimpin langsung oleh Rasulullah SAW setelah hijrah ke Madinah. Tujuan utamanya adalah untuk membuat perjanjian damai dengan kabilah Bani Dhamrah serta mengamankan rute perdagangan di sekitar wilayah Madinah.", 
-                lesson: "Pentingnya diplomasi, menjaga keamanan wilayah pertahanan, dan membangun aliansi damai sejak dini." 
+                lesson: "Pentingnya diplomasi, menjaga keamanan wilayah pertahanan, dan membangun aliansi damai sejak dini.",
+                strategy: "Nabi SAW memimpin langsung 70 orang sahabat Muhajirin untuk memotong jalur kafilah dagang Quraisy dan mengikat perjanjian damai dengan kabilah setempat."
             },
             { 
                 id: 2, 
                 name: "Perang Badar Al-Kubra", 
                 year: "2 Hijriah", 
                 desc: "Pertempuran besar pertama yang menentukan masa depan Islam. Pasukan muslim yang berjumlah hanya 313 orang berhasil mengalahkan pasukan kafir Quraisy yang berjumlah lebih dari 1000 orang dengan bantuan para malaikat yang dikirim oleh Allah SWT.", 
-                lesson: "Kemenangan mutlak hanya datang dari pertolongan Allah SWT, bukan semata-mata karena jumlah pasukan atau senjata." 
+                lesson: "Kemenangan mutlak hanya datang dari pertolongan Allah SWT, bukan semata-mata karena jumlah pasukan atau senjata.",
+                strategy: "Menguasai sumber mata air Badar terlebih dahulu sebelum musuh tiba, memaksa musuh bertempur dalam kondisi kehausan."
             },
             { 
                 id: 3, 
                 name: "Perang Uhud", 
                 year: "3 Hijriah", 
                 desc: "Ujian berat bagi kaum muslimin di bukit Uhud. Akibat sebagian pasukan pemanah mengabaikan perintah Rasulullah SAW karena tergoda harta rampasan perang (ghanimah), pasukan Khalid bin Walid (saat itu belum masuk Islam) berhasil memutarbalikkan keadaan.", 
-                lesson: "Ketaatan mutlak kepada pemimpin dan fokus pada tujuan perjuangan, bukan pada urusan duniawi." 
-            },
-            { 
-                id: 4, 
-                name: "Perang Khandaq (Ahzab)", 
-                year: "5 Hijriah", 
-                desc: "Pengepungan kota Madinah oleh pasukan sekutu (Ahzab) yang terdiri dari kafir Quraisy, kabilah Arab, dan kaum Yahudi. Kaum muslimin bertahan dengan menggali parit raksasa berkat usulan brilian dari sahabat Salman Al-Farisi.", 
-                lesson: "Keterbukaan terhadap ide kreatif, kerja sama tim yang solid, dan kesabaran dalam menghadapi kepungan musuh." 
-            },
-            { 
-                id: 5, 
-                name: "Perang Khaibar", 
-                year: "7 Hijriah", 
-                desc: "Penaklukan benteng pertahanan kaum Yahudi Khaibar yang sangat kuat dan strategis. Perang ini mengakhiri ancaman konspirasi militer dari kaum Yahudi yang sering memprovokasi kabilah Arab untuk menyerang Madinah.", 
-                lesson: "Pentingnya menuntaskan akar masalah keamanan dan ketegasan dalam menghadapi pengkhianatan." 
-            },
-            { 
-                id: 6, 
-                name: "Perang Mu'tah", 
-                year: "8 Hijriah", 
-                desc: "Pertempuran sengit melawan pasukan Romawi Timur di Syam. Tiga panglima perang muslim gugur syahid berturut-turut hingga bendera komando diambil alih oleh Khalid bin Walid yang berhasil menyelamatkan pasukan dengan taktik militer yang jenius.", 
-                lesson: "Kepemimpinan yang adaptif di saat krisis dan keberanian menghadapi kekuatan yang jauh lebih besar." 
-            },
-            { 
-                id: 7, 
-                name: "Fathu Makkah", 
-                year: "8 Hijriah", 
-                desc: "Pembebasan kota suci Makkah dari kekuasaan kaum musyrik. Rasulullah SAW memasuki kota Makkah dengan penuh ketundukan tanpa ada pertumpahan darah besar, kemudian menghancurkan berhala di sekitar Ka'bah dan memaafkan penduduk Makkah.", 
-                lesson: "Sifat pemaaf yang luar biasa, kerendahan hati saat meraih kemenangan besar, dan dakwah yang damai." 
-            },
-            { 
-                id: 8, 
-                name: "Perang Tabuk", 
-                year: "9 Hijriah", 
-                desc: "Ekspedisi militer terakhir yang dipimpin langsung oleh Rasulullah SAW menuju perbatasan Romawi. Meskipun menempuh perjalanan sangat panas dan jauh, perang ini berakhir tanpa kontak fisik karena pasukan Romawi mundur ketakutan melihat persatuan umat Islam.", 
-                lesson: "Kekuatan mental dan reputasi (wibawa) yang kuat mampu menggentarkan musuh sebelum pertempuran dimulai." 
+                lesson: "Ketaatan mutlak kepada pemimpin dan fokus pada tujuan perjuangan, bukan pada urusan duniawi.",
+                strategy: "Menempatkan 50 pasukan pemanah di atas bukit Ainain untuk melindungi lini belakang pasukan utama."
             }
         ];
 
-        function renderBattles(list = battles) {
-            const container = document.getElementById('battles-container');
-            container.innerHTML = list.map(b => `
-                <div class="glass p-6 rounded-3xl hover:border-emerald-500/30 transition-all cursor-pointer group" onclick="openModal(${b.id})">
-                    <div class="flex justify-between items-start mb-3">
-                        <h3 class="text-lg font-bold text-emerald-400 group-hover:text-emerald-300 transition-colors">${b.name}</h3>
-                        <span class="bg-emerald-500/10 text-emerald-300 text-xs px-3 py-1 rounded-full font-semibold">${b.year}</span>
+        let currentPage = 'home';
+        let activeBattleId = null;
+
+        function navigateTo(page, id = null) {
+            currentPage = page;
+            activeBattleId = id;
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function render() {
+            const container = document.getElementById('app-container');
+            if (currentPage === 'home') {
+                container.innerHTML = `
+                    <div class="fade-in">
+                        <!-- Hero -->
+                        <div class="text-center mb-16">
+                            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+                                Sirah Nabawiyah <br class="hidden md:block"><span class="text-neon bg-clip-text">Urjuzah al-Mi'iyah</span>
+                            </h1>
+                            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+                                Jelajahi sejarah perang, strategi militer, dan hikmah berharga dari setiap pertempuran Rasulullah SAW melalui navigasi Single Page Application yang modern dan cepat.
+                            </p>
+                        </div>
+
+                        <!-- Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            ${battles.map(b => `
+                                <div onclick="navigateTo('detail', ${b.id})" class="neon-border glass p-6 rounded-3xl cursor-pointer transition-custom flex flex-col justify-between h-64">
+                                    <div>
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="text-xs font-bold text-neon uppercase tracking-widest">${b.year}</span>
+                                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-neon"></i>
+                                        </div>
+                                        <h3 class="text-xl font-bold mb-2">${b.name}</h3>
+                                        <p class="text-slate-400 text-xs leading-relaxed line-clamp-3">${b.desc}</p>
+                                    </div>
+                                    <span class="text-neon text-xs font-semibold flex items-center gap-1">Pelajari Selengkapnya <i data-lucide="chevron-right" class="w-3 h-3"></i></span>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
-                    <p class="text-slate-400 text-sm leading-relaxed line-clamp-2">${b.desc}</p>
-                    <span class="text-emerald-500 text-xs font-bold mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Baca Selengkapnya <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
-                </div>
-            `).join('');
+                `;
+            } else if (currentPage === 'detail') {
+                const b = battles.find(x => x.id === activeBattleId);
+                container.innerHTML = `
+                    <div class="fade-in max-w-3xl mx-auto">
+                        <!-- Back Button -->
+                        <button onclick="navigateTo('home')" class="flex items-center gap-2 text-slate-400 hover:text-neon text-sm font-semibold mb-8 transition-custom">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Beranda
+                        </button>
+
+                        <!-- Header -->
+                        <div class="border-b border-white/10 pb-6 mb-8">
+                            <span class="text-xs font-bold text-neon uppercase tracking-widest">${b.year}</span>
+                            <h1 class="text-3xl md:text-5xl font-extrabold mt-2">${b.name}</h1>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-lg font-bold text-neon mb-2 flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5"></i> Ringkasan Peristiwa</h3>
+                                <p class="text-slate-300 text-sm md:text-base leading-relaxed">${b.desc}</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white/5 p-6 rounded-3xl border border-white/5">
+                                    <h4 class="text-sm font-bold text-neon mb-2 flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4"></i> Strategi Militer</h4>
+                                    <p class="text-slate-300 text-xs leading-relaxed">${b.strategy}</p>
+                                </div>
+                                <div class="bg-white/5 p-6 rounded-3xl border border-white/5">
+                                    <h4 class="text-sm font-bold text-neon mb-2 flex items-center gap-2"><i data-lucide="award" class="w-4 h-4"></i> Pelajaran Berharga</h4>
+                                    <p class="text-slate-300 text-xs leading-relaxed">${b.lesson}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
             lucide.createIcons();
         }
 
-        function filterBattles() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const filtered = battles.filter(b => b.name.toLowerCase().includes(query));
-            renderBattles(filtered);
-        }
-
-        function openModal(id) {
-            const b = battles.find(x => x.id === id);
-            document.getElementById('modal-title').innerText = b.name;
-            document.getElementById('modal-year').innerText = b.year;
-            document.getElementById('modal-desc').innerText = b.desc;
-            document.getElementById('modal-lesson').innerText = b.lesson;
-            document.getElementById('detail-modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('detail-modal').classList.add('hidden');
-        }
-
-        renderBattles();
+        // Jalankan render pertama kali
+        render();
     </script>
 </body>
 </html>
